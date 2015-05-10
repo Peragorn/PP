@@ -8,8 +8,8 @@ from django.db import models
 
 from django.shortcuts import render, render_to_response, RequestContext, HttpResponseRedirect, HttpResponse
 
-from .forms import UserForm
-from .models import Wniosek, Firma
+from .forms import UserForm, WniosekForm_Wnioskodawca
+from .models import Wniosek, Przedmiot_Zamowienia
 from django.utils import timezone
 
 def home(request):
@@ -18,7 +18,7 @@ def home(request):
 	#context_dict = {'Moviees': category_list}
 
 
-	form = UserForm()
+	form = WniosekForm_Wnioskodawca()
 	context = {"form": form}
 	template = "home.html"
 	return render(request,template,context)
@@ -81,12 +81,12 @@ class WniosekDetailView(DetailView):
 		context['now'] = timezone.now()
 		return context
 	
-class FirmaDetailView(DetailView):
+class Przedmiot_ZamowieniaDetailView(DetailView):
 
-	model = Firma
+	model = Przedmiot_Zamowienia
 	slug_field = 'id'
 
 	def get_context_data(self, **kwargs):
-		context = super(FirmaDetailView, self).get_context_data(**kwargs)
+		context = super(Przedmiot_ZamowieniaaDetailView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()
 		return context
