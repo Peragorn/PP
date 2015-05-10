@@ -8,6 +8,8 @@ from django.db import models
 
 from django.shortcuts import render, render_to_response, RequestContext, HttpResponseRedirect, HttpResponse
 
+from django.core.urlresolvers import reverse
+
 from .forms import UserForm, WniosekForm_Wnioskodawca
 from .models import Wniosek, Przedmiot_Zamowienia
 from django.utils import timezone
@@ -21,6 +23,22 @@ def home(request):
 	form = WniosekForm_Wnioskodawca()
 	context = {"form": form}
 	template = "home.html"
+	return render(request,template,context)
+	
+def wniosek_submit(request):
+	if request.method == 'POST':
+		form=WniosekForm_Wnioskodawca(request.POST)
+		if form.is_valid():
+			form.save()
+			#return HttpResponseRedirect(reverse('pp:'))
+	return  render(request, 'wniosek_submit.html', {
+		'form': WniosekForm_Wnioskodawca(),
+	})
+def wniosek_new(request):
+
+	form = WniosekForm_Wnioskodawca()
+	context = {"form": form}
+	template = "wniosek_new.html"
 	return render(request,template,context)
 	
 def register(request):

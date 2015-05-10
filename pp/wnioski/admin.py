@@ -12,5 +12,5 @@ class WniosekAdmin(admin.ModelAdmin):
     class Meta:
         model = Wniosek
 		
-admin.site.register(Przedmiot_Zamowienia, Przedmiot_ZamowieniaAdmin)
 admin.site.register(Wniosek, WniosekAdmin)
+admin.site.register(Przedmiot_Zamowienia, Przedmiot_ZamowieniaAdmin)

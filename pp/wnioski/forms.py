@@ -12,8 +12,7 @@ class UserForm(forms.ModelForm):
 class WniosekForm_Wnioskodawca(forms.ModelForm):
 		class Meta:
 			model = Wniosek
-			fields = ['nr_rej_wniosku',
-			'jednostka_organizacyjna_uczelni',
+			fields = ['jednostka_organizacyjna_uczelni',
 			'wnioskodawca', 
 			'wnioskodawca_tel',
 			'osoba_dokonujaca_opisu',
