@@ -46,6 +46,18 @@ def register(request):
 	context = {"form": form}
 	template = "register.html"
 	return render(request,template,context)
+
+def about(request):
+	form = UserForm()
+	context = {"form": form}
+	template = "about.html"
+	return render(request,template,context)
+	
+def contact(request):
+	form = UserForm()
+	context = {"form": form}
+	template = "contact.html"
+	return render(request,template,context)
 	
 def search(request):
 
