@@ -27,7 +27,7 @@ class Wniosek(models.Model):
 	jednostka_organizacyjna_uczelni = models.CharField(max_length=255, null=True, blank=True)
 	
 	#1.1
-	Wnioskodawca_Imie_i_nazwisko = models.CharField(max_length=255, null=True, blank=True)
+	wnioskodawca_imie_i_nazwisko = models.CharField(max_length=255, null=True, blank=True)
 	wnioskodawca_tel = models.CharField(max_length=255, null=True, blank=True)
 
 	#1.2
@@ -86,6 +86,17 @@ class Wniosek(models.Model):
 	wnioskodawca_w_uzgodnieniu_z_dzialem_nauki = models.CharField(max_length=255, null=True, blank=True)
 	wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
 	
+	# Decyzje
+	Decyzja_szefa_pionu = models.NullBooleanField(default=False, blank=True)
+	Decyzja_komisji_przetargowej = models.NullBooleanField(default=False, blank=True)
+	Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.NullBooleanField(default=False, blank=True)
+	Decyzja_kierownika_Dzialu_Nauki = models.NullBooleanField(default=False, blank=True)
+	Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej = models.NullBooleanField(default=False, blank=True)
+	
+	# AKTORZY
+	Szacujacy_wartosc = models.ForeignKey(User, related_name = 'wn_us_szacujacy')
+	Szef_pionu = models.ForeignKey(User, related_name = 'wn_us_szef')
+	
 	def __str__(self):              # __unicode__ on Python 2
 		return "%d - %s" % (self.id, self.wnioskodawca)
 	
@@ -98,7 +109,7 @@ class Przedmiot_Zamowienia(models.Model):
 	Kwota_na_realizacje_brutto = models.DecimalField(max_digits=6, decimal_places=2)
 	Pozycja_w_planie_zamowien = models.IntegerField()
 	Opinia_trybu_zamowienia = models.CharField(max_length=255)
-	
+		
 	# Nazwa wiersza w tabeli numeru 9
 	postepujacy = models.CharField(max_length=255)
 	

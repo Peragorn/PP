@@ -10,7 +10,8 @@ from django.shortcuts import render, render_to_response, RequestContext, HttpRes
 
 from django.core.urlresolvers import reverse
 
-from .forms import UserForm, WniosekForm_Wnioskodawca, WniosekForm_All, PrzedmiotZamowieniaForm
+from .forms import UserForm
+from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_Biuro_Wspolpracy, PrzedmiotZamowieniaForm
 from .models import Wniosek, Przedmiot_Zamowienia
 from django.utils import timezone
 
@@ -36,12 +37,21 @@ def wniosek_submit(request):
 	return  render(request, 'wniosek_submit.html', {
 		'form': WniosekForm_Wnioskodawca(),
 	})
+	
 def wniosek_new(request):
 
 	form = WniosekForm_Wnioskodawca()
 	context = {"form": form}
 	template = "wniosek_new.html"
 	return render(request,template,context)
+		
+def wniosek_biuro_wspolpracy(request):
+	form = WniosekForm_Biuro_Wspolpracy()
+	context = {"form": form}
+	template = "wniosek_biuro_wspolpracy.html"
+	return render(request,template,context)
+	
+#
 	
 def wniosek_step3(request):
 	form = WniosekForm_Step3()

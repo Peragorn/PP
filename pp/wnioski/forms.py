@@ -32,12 +32,20 @@ class WniosekForm_All(forms.ModelForm):
 			'data_zlozenia_wniosku_w_dziale_zamowien_publicznych', #7
 			'uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku', #8
 			]
+			
+
+			
+class WniosekForm_Biuro_Wspolpracy(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+			fields = ['Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej'
+			]
 		
 class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 		class Meta:
 			model = Wniosek
 			fields = ['jednostka_organizacyjna_uczelni',
-			'wnioskodawca', 
+			'wnioskodawca_imie_i_nazwisko', 
 			'wnioskodawca_tel',
 			'osoba_dokonujaca_opisu',
 			'osoba_dokonujaca_opisu_tel',
