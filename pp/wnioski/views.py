@@ -25,6 +25,8 @@ def home(request):
 	template = "home.html"
 	return render(request,template,context)
 	
+### WNIOSEK
+	
 def wniosek_submit(request):
 	if request.method == 'POST':
 		form=WniosekForm_Wnioskodawca(request.POST)
@@ -39,6 +41,12 @@ def wniosek_new(request):
 	form = WniosekForm_Wnioskodawca()
 	context = {"form": form}
 	template = "wniosek_new.html"
+	return render(request,template,context)
+	
+def wniosek_step3(request):
+	form = WniosekForm_Step3()
+	context = {"form": form}
+	template = "wniosek_step3.html"
 	return render(request,template,context)
 	
 def register(request):

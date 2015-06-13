@@ -31,8 +31,6 @@ class WniosekForm_All(forms.ModelForm):
 			'kontrasygnata_finansowa_uwagi', #6
 			'data_zlozenia_wniosku_w_dziale_zamowien_publicznych', #7
 			'uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku', #8
-			'dzial', #9
-			'puste'
 			]
 		
 class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
@@ -56,6 +54,17 @@ class WniosekForm_Step2(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
 		class Meta:
 			model = Wniosek
 			fields = ['szacunkowa_wartosc_zamowienia_netto'
+			]
+			
+class WniosekForm_Step3(forms.ModelForm): #KIEROWNIK DZIALU NAUKI LUB OSOBA UPOWAZNIONA
+		class Meta:
+			model = Wniosek
+			fields = ['data_zlozenia_wniosku_w_dziale_zamowien_publicznych', #7
+			'uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku', #8
+			'komisja_przetargowa',
+			'dzial_aparatury_badawczej_i_dydaktycznej',
+			'wnioskodawca_w_uzgodnieniu_z_dzialem_nauki',
+			'wnioskodawca'
 			]
 			
 class PrzedmiotZamowieniaForm(forms.ModelForm): # Przedmiot Zamowienia

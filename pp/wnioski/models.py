@@ -27,7 +27,7 @@ class Wniosek(models.Model):
 	jednostka_organizacyjna_uczelni = models.CharField(max_length=255, null=True, blank=True)
 	
 	#1.1
-	wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
+	Wnioskodawca_Imie_i_nazwisko = models.CharField(max_length=255, null=True, blank=True)
 	wnioskodawca_tel = models.CharField(max_length=255, null=True, blank=True)
 
 	#1.2
@@ -81,8 +81,10 @@ class Wniosek(models.Model):
 	uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku = models.CharField(max_length=255, null=True, blank=True)
 	
 	#9
-	dzial = models.CharField(max_length=255, null=True, blank=True)
-	puste = models.CharField(max_length=255, null=True, blank=True)
+	komisja_przetargowa = models.CharField(max_length=255, null=True, blank=True)
+	dzial_aparatury_badawczej_i_dydaktycznej = models.CharField(max_length=255, null=True, blank=True)
+	wnioskodawca_w_uzgodnieniu_z_dzialem_nauki = models.CharField(max_length=255, null=True, blank=True)
+	wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return "%d - %s" % (self.id, self.wnioskodawca)
@@ -96,7 +98,6 @@ class Przedmiot_Zamowienia(models.Model):
 	Kwota_na_realizacje_brutto = models.DecimalField(max_digits=6, decimal_places=2)
 	Pozycja_w_planie_zamowien = models.IntegerField()
 	Opinia_trybu_zamowienia = models.CharField(max_length=255)
-	
 	
 	# Nazwa wiersza w tabeli numeru 9
 	postepujacy = models.CharField(max_length=255)
