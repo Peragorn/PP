@@ -47,6 +47,12 @@ class WniosekForm_Biuro_Rozwoju(forms.ModelForm):
 			fields = ['Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych'
 			]
 			
+class WniosekForm_Szef_Pionu(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+			fields = ['Decyzja_szefa_pionu'
+			]
+			
 class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 		class Meta:
 			model = Wniosek
