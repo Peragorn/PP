@@ -1,7 +1,7 @@
 from django import forms
 
 from .models import User
-from .models import Wniosek
+from .models import Wniosek, Przedmiot_Zamowienia
 
 class UserForm(forms.ModelForm):
 	password = forms.CharField(widget=forms.PasswordInput())
@@ -57,3 +57,7 @@ class WniosekForm_Step2(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
 			model = Wniosek
 			fields = ['szacunkowa_wartosc_zamowienia_netto'
 			]
+			
+class PrzedmiotZamowieniaForm(forms.ModelForm): # Przedmiot Zamowienia
+		class Meta:
+			model = Przedmiot_Zamowienia

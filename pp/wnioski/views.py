@@ -10,7 +10,7 @@ from django.shortcuts import render, render_to_response, RequestContext, HttpRes
 
 from django.core.urlresolvers import reverse
 
-from .forms import UserForm, WniosekForm_Wnioskodawca, WniosekForm_All
+from .forms import UserForm, WniosekForm_Wnioskodawca, WniosekForm_All, PrzedmiotZamowieniaForm
 from .models import Wniosek, Przedmiot_Zamowienia
 from django.utils import timezone
 
@@ -63,6 +63,12 @@ def example(request):
 	form = WniosekForm_All()
 	context = {"form": form}
 	template = "example.html"
+	return render(request,template,context)
+	
+def przedmiot_zamowienia(request):
+	form = PrzedmiotZamowieniaForm()
+	context = {"form": form}
+	template = "przedmiot_zamowienia.html"
 	return render(request,template,context)
 	
 def search(request):
