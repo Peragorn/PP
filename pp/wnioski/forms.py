@@ -9,7 +9,7 @@ class UserForm(forms.ModelForm):
 		model = User
 		fields = ('username', 'email', 'password')
 		
-class WniosekForm_Wnioskodawca(forms.ModelForm):
+class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 		class Meta:
 			model = Wniosek
 			fields = ['jednostka_organizacyjna_uczelni',
@@ -22,9 +22,6 @@ class WniosekForm_Wnioskodawca(forms.ModelForm):
 			'przedmiot_zamowienia_okreslono_na_okres',
 			'merytoryczne_uzasadnienie_celowosci',
 			'termin_realizacji_zamowienia',
-			'szacunkowa_wartosc_zamowienia_netto',
-			'ustalenia_szacunkowej_wartosci_zamowienia_dokonano_na_podstawie',
-			'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia',
 			'kwota_przeznaczona_na_sfinansowanie_zamowienia_brutto',
 			'zrodlo_finansowania_oraz_zgodnosc_z_planem_rzeczowo_finansowym'
-]
+			]

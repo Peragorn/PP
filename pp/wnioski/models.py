@@ -2,7 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 
 # Create your models here.
-		
+
+class Ranga(models.Model):
+    user = models.OneToOneField(User)
+	
+	#0 - User
+	#1 - Admin
+	#2 - Rektor
+	#3 - ?
+	#4 - ?
+	
+    type = models.IntegerField(default=0, null=False)
+
+    def getType(self):
+        return self.type
+
+    def __str__(self):
+        return self.user.username
+	
 class Wniosek(models.Model):
 	#nr_rej_wniosku = models.IntegerField(null=True, blank=True)
 	

@@ -19,7 +19,6 @@ urlpatterns = patterns('',
 	url(r'^wniosek/new/$', 'wnioski.views.wniosek_new', name='wniosek_new'),
 	url(r'^wniosek/submit/$', 'wnioski.views.wniosek_submit', name='wniosek_submit'),
 	url(r'^wniosek/(?P<slug>[-_\w]+)/$', WniosekDetailView.as_view(), name='wniosek_detail'),
-	#komentarz
 	# url(r'^blog/', include('blog.urls')),
 	url(r'^admin/', include(admin.site.urls)),
 )
