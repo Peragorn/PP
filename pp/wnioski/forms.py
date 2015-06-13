@@ -25,3 +25,9 @@ class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 			'kwota_przeznaczona_na_sfinansowanie_zamowienia_brutto',
 			'zrodlo_finansowania_oraz_zgodnosc_z_planem_rzeczowo_finansowym'
 			]
+			
+class WniosekForm_Step2(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
+		class Meta:
+			model = Wniosek
+			fields = ['szacunkowa_wartosc_zamowienia_netto'
+			]
