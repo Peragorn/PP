@@ -53,6 +53,12 @@ class WniosekForm_Szef_Pionu(forms.ModelForm):
 			fields = ['Decyzja_szefa_pionu'
 			]
 			
+class WniosekForm_Dzial_Nauki(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+			fields = ['Decyzja_dzialu_nauki'
+			]
+			
 class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 		class Meta:
 			model = Wniosek

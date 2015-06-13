@@ -92,6 +92,7 @@ class Wniosek(models.Model):
 	Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.NullBooleanField(default=False, blank=True)
 	Decyzja_kierownika_Dzialu_Nauki = models.NullBooleanField(default=False, blank=True)
 	Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej = models.NullBooleanField(default=False, blank=True)
+	Decyzja_dzialu_nauki = models.NullBooleanField(default=False, blank=True)
 	
 	# AKTORZY
 	Szacujacy_wartosc = models.ForeignKey(User, related_name = 'wn_us_szacujacy')

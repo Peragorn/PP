@@ -28,7 +28,7 @@ urlpatterns = patterns('',
 	url(r'^wniosek/szef_pionu/$', 'wnioski.views.wniosek_szef_pionu', name='wniosek_szef_pionu'),
 	url(r'^wniosek/biuro_rozwoju/$', 'wnioski.views.wniosek_biuro_rozwoju', name='wniosek_biuro_rozwoju'),
 	url(r'^wniosek/biuro_wspolpracy/$', 'wnioski.views.wniosek_biuro_wspolpracy', name='wniosek_biuro_wspolpracy'),
-
+	url(r'^wniosek/dzial_nauki/$', 'wnioski.views.wniosek_dzial_nauki', name='wniosek_dzial_nauki'),
 
 	url(r'^wniosek/(?P<slug>[-_\w]+)/$', WniosekDetailView.as_view(), name='wniosek_detail'),
 	
