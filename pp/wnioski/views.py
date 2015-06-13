@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 # Create your views here.
-
+from django.contrib.auth import authenticate, login, logout
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.db import models
