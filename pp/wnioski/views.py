@@ -51,7 +51,13 @@ def wniosek_biuro_wspolpracy(request):
 	template = "wniosek_biuro_wspolpracy.html"
 	return render(request,template,context)
 	
-#
+def wniosek_biuro_rozwoju(request):
+	form = WniosekForm_Biuro_Rozwoju()
+	context = {"form": form}
+	template = "wniosek_biuro_rozwoju.html"
+	return render(request,template,context)
+	
+	#
 	
 def wniosek_step3(request):
 	form = WniosekForm_Step3()

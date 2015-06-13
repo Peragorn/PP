@@ -26,7 +26,7 @@ urlpatterns = patterns('',
 	url(r'^wniosek/przedmiot/$', 'wnioski.views.przedmiot_zamowienia', name='przedmiot_zamowienia'),
 	
 	#url(r'^wniosek/szef_pionu/$', 'wnioski.views.wniosek_szef_pionu', name='wniosek_szef_pionu'),
-	#url(r'^wniosek/biuro_rozwoju/$', 'wnioski.views.wniosek_biuro_rozwoju', name='wniosek_biuro_rozwoju'),
+	url(r'^wniosek/biuro_rozwoju/$', 'wnioski.views.wniosek_biuro_rozwoju', name='wniosek_biuro_rozwoju'),
 	url(r'^wniosek/biuro_wspolpracy/$', 'wnioski.views.wniosek_biuro_wspolpracy', name='wniosek_biuro_wspolpracy'),
 
 

@@ -40,7 +40,13 @@ class WniosekForm_Biuro_Wspolpracy(forms.ModelForm):
 			model = Wniosek
 			fields = ['Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej'
 			]
-		
+
+class WniosekForm_Biuro_Rozwoju(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+			fields = ['Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych'
+			]
+			
 class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 		class Meta:
 			model = Wniosek
