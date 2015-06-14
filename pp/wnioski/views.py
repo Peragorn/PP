@@ -90,7 +90,7 @@ def wniosek_new(request):
 			form.save()
 			
 			msg_title = 'WniosekHelper: Powiadomienie o nowym wniosku'
-			msg_body = 'WniosekHelper: Zostales dodany jako osoba upowazniona do wniosku. Odwiedz nas na www.wniosekhelper.ru.au.us'
+			msg_body = 'Zostales dodany jako osoba upowazniona do wniosku. Odwiedz nas na www.wniosekhelper.ru.au.us'
 			msg_from = 'lgodlewski8@gmail.com'
 			
 			msg_1 = form.cleaned_data['wnioskodawca_imie_i_nazwisko'].email
@@ -246,10 +246,23 @@ def my_model_view(request, mymodel_id):
 	if request.method == 'POST':
 
 		if form.is_valid():
-			form.save()
+			m = form.save()
 			#return HttpResponseRedirect(reverse('pp:'))
-			form = MyModelForm(instance=model)
+			
 			template = "wniosek_detail.html"
+			
+			msg_title = 'WniosekHelper: Nowe zmiany w Twoim wniosku! '
+			msg_body = 'Sprawdz stan wniosku na na www.wniosekhelper.ru.au.us'
+			msg_from = 'lgodlewski8@gmail.com'
+			
+			
+			obj = User.objects.get(pk=m.wnioskodawca_imie_i_nazwisko.id)
+			
+			msg_1 = obj.email
+			
+			send_mail(msg_title, msg_body, msg_from, [msg_1], fail_silently=False)
+			form = MyModelForm(instance=model)
+			
 			return  render(request, 'home.html', {
 				'form': WniosekForm_Wnioskodawca(),
 		})
