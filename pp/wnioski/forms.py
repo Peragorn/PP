@@ -78,7 +78,7 @@ class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 			'Kierownik_Biura_Wspolpracy_Miedzynarodowej',
 			]
 			
-class WniosekForm_Step2(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
+class WniosekForm_Szacujacy(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
 		class Meta:
 			model = Wniosek
 			fields = ['szacunkowa_wartosc_zamowienia_netto'

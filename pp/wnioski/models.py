@@ -28,11 +28,11 @@ class Wniosek(models.Model):
 	
 	#1.1
 	#wnioskodawca_imie_i_nazwisko = models.CharField(max_length=255, null=True, blank=True)
-	wnioskodawca_imie_i_nazwisko = models.ForeignKey(User, related_name = 'wn_user_imie')
+	wnioskodawca_imie_i_nazwisko = models.ForeignKey(User, related_name = 'wn_user_imie', null=True, blank=True)
 	wnioskodawca_tel = models.CharField(max_length=255, null=True, blank=True)
 
 	#1.2
-	osoba_dokonujaca_opisu = models.ForeignKey(User, related_name = 'wn_user_osoba_dokonujaca_opisu')
+	osoba_dokonujaca_opisu = models.ForeignKey(User, related_name = 'wn_user_osoba_dokonujaca_opisu', null=True, blank=True)
 	#osoba_dokonujaca_opisu_tel = models.CharField(max_length=255, null=True, blank=True)
 	#osoba_dokonujaca_opisu_email = models.CharField(max_length=255, null=True, blank=True)
 	
@@ -49,7 +49,7 @@ class Wniosek(models.Model):
 	#4
 	szacunkowa_wartosc_zamowienia_netto = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
 	ustalenia_szacunkowej_wartosci_zamowienia_dokonano_na_podstawie = models.CharField(max_length=255, null=True, blank=True)
-	osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia = models.ForeignKey(User, related_name = 'wn_user_osoba_szacujaca')
+	osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia = models.ForeignKey(User, related_name = 'wn_user_osoba_szacujaca', null=True, blank=True)
 	
 	#4.1
 	kwota_przeznaczona_na_sfinansowanie_zamowienia_brutto = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
@@ -88,19 +88,19 @@ class Wniosek(models.Model):
 	wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
 	
 	# Osoby decydujace
-	Szef_pionu = models.ForeignKey(User, related_name = 'wn_us_szef', null=True)
+	Szef_pionu = models.ForeignKey(User, related_name = 'wn_us_szef', null=True, blank=True)
 	Decyzja_szefa_pionu = models.BooleanField(default=False, blank=True)
 	
-	Osoba_reprezentujaca_komisje_przetargowa = models.ForeignKey(User, related_name = 'wn_user_komisja_przetargowa')
+	Osoba_reprezentujaca_komisje_przetargowa = models.ForeignKey(User, related_name = 'wn_user_komisja_przetargowa' , null=True, blank=True)
 	Decyzja_komisji_przetargowej = models.BooleanField(default=False, blank=True)
 	
-	Kierownik_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.ForeignKey(User, related_name = 'wn_user_biuro_rozwoju')
+	Kierownik_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.ForeignKey(User, related_name = 'wn_user_biuro_rozwoju' , null=True, blank=True)
 	Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.BooleanField(default=False, blank=True)
 	
-	Kierownik_Dzialu_Nauki = models.ForeignKey(User, related_name = 'wn_user_dzial_nauki')
+	Kierownik_Dzialu_Nauki = models.ForeignKey(User, related_name = 'wn_user_dzial_nauki' , null=True, blank=True)
 	Decyzja_kierownika_Dzialu_Nauki = models.BooleanField(default=False, blank=True)
 	
-	Kierownik_Biura_Wspolpracy_Miedzynarodowej = models.ForeignKey(User, related_name = 'wn_user_biuro_wspolpracy')
+	Kierownik_Biura_Wspolpracy_Miedzynarodowej = models.ForeignKey(User, related_name = 'wn_user_biuro_wspolpracy' , null=True, blank=True)
 	Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej = models.BooleanField(default=False, blank=True)
 	
 	def __str__(self):              # __unicode__ on Python 2

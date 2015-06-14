@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from .forms import UserForm
-from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_Biuro_Wspolpracy, WniosekForm_Szef_Pionu, WniosekForm_Dzial_Nauki, PrzedmiotZamowieniaForm
+from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_Szacujacy, WniosekForm_Biuro_Wspolpracy, WniosekForm_Szef_Pionu, WniosekForm_Dzial_Nauki, PrzedmiotZamowieniaForm
 from .models import Wniosek, Przedmiot_Zamowienia, User, Ranga
 from django.utils import timezone
 
@@ -30,14 +30,26 @@ def home(request):
 	
 ### WNIOSEK
 	
-def wniosek_submit(request):
+def wniosek_submit_wnioskodawca(request, id):
 	if request.method == 'POST':
-		form=WniosekForm_Wnioskodawca(request.POST)
+		instance = get_object_or_404(Wniosek, id=id)
+		form=WniosekForm_All(request.POST or None, instance=instance)
 		if form.is_valid():
 			form.save()
 			#return HttpResponseRedirect(reverse('pp:'))
-	return  render(request, 'wniosek_submit.html', {
+	return  render(request, 'wniosek_submit_wnioskodawca.html', {
 		'form': WniosekForm_Wnioskodawca(),
+	})
+	
+def wniosek_submit_szacujacy(request):
+	if request.method == 'POST':
+		instance = get_object_or_404(MyModel, id=id)
+		form=WniosekForm_Szacujacy(request.POST or None, instance=instance)
+		if form.is_valid():
+			form.save()
+			#return HttpResponseRedirect(reverse('pp:'))
+	return  render(request, 'wniosek_submit_szacujacy.html', {
+		'form': WniosekForm_Szacujacy(),
 	})
 	
 def wniosek_moje(request):
@@ -70,6 +82,14 @@ def wniosek_moje(request):
 	return render(request,template,context_dict)
 	
 def wniosek_new(request):
+	if request.method == 'POST':
+		form=WniosekForm_Wnioskodawca(request.POST)
+		if form.is_valid():
+			form.save()
+			#return HttpResponseRedirect(reverse('pp:'))
+		return  render(request, 'home.html', {
+		'form': WniosekForm_Szacujacy(),
+	})
 
 	form = WniosekForm_Wnioskodawca()
 	context = {"form": form}
@@ -190,6 +210,8 @@ def user_logout(request):
 	
 # ITEM VIEWS
 
+
+
 class WniosekDetailView(DetailView):
 
 	model = Wniosek
@@ -199,15 +221,66 @@ class WniosekDetailView(DetailView):
 		context = super(WniosekDetailView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()
 		return context
-	
+		
 def my_model_view(request, mymodel_id):
 	class MyModelForm(forms.ModelForm):
 		class Meta:
 			model = Wniosek
 
 	model = get_object_or_404(Wniosek, pk=mymodel_id)
-	form = MyModelForm(instance=model)
-	return render(request, 'wniosek_detail.html', { 'form': form})
+	
+	current_user = request.user
+	instance = get_object_or_404(Wniosek, pk=mymodel_id)
+	#(Item.objects.filter(Q(creator=owner) | Q(moderated=False))
+	#form = myModelForm(instance=model)
+	
+	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+		template = "wniosek_szacujacy.html"
+	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+		template = "wniosek_szacujacy.html"
+	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+		template = "wniosek_szacujacy.html"
+	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+		template = "wniosek_szacujacy.html"
+	
+	if request.method == 'POST':
+
+		if form.is_valid():
+			form.save()
+			#return HttpResponseRedirect(reverse('pp:'))
+			form = MyModelForm(instance=model)
+			template = "wniosek_detail.html"
+			return  render(request, 'home.html', {
+				'form': WniosekForm_Wnioskodawca(),
+		})
+		else:		
+			return render(request, 'about.html', context)
+			
+	else:	
+		form = MyModelForm(instance=model)
+		template = "wniosek_detail.html"
+	
+		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+			template = "wniosek_szacujacy.html"
+		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+			template = "wniosek_szacujacy.html"
+		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+			template = "wniosek_szacujacy.html"
+		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+			template = "wniosek_szacujacy.html"
+
+		context = {"form": form}
+		return render(request, template, context)
+	
+
 	
 class Przedmiot_ZamowieniaDetailView(DetailView):
 

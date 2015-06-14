@@ -3,8 +3,9 @@
 
 {% block content %}
 
+<p>Jestes osoba do szacowania. </p>
 	  
-	<form method="post" action="/wniosek/submit/">{% csrf_token %}
+	<form method="post" action="">{% csrf_token %}
 		<div class="form-group">
 			{% for field in form %}
 				<br /> <label for="exampleInputEmail1">{{ field.label_tag }}</label>
