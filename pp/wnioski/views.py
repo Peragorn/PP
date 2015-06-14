@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from .forms import UserForm
-from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_Szacujacy, WniosekForm_Biuro_Wspolpracy, WniosekForm_Szef_Pionu, WniosekForm_Dzial_Nauki, PrzedmiotZamowieniaForm
+from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_New, WniosekForm_Szacujacy, WniosekForm_Dzial_Nauki, WniosekForm_Kwestor, WniosekForm_Rektor, WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych,PrzedmiotZamowieniaForm
 from .models import Wniosek, Przedmiot_Zamowienia, User, Ranga
 from django.utils import timezone
 
@@ -62,10 +62,10 @@ def wniosek_moje(request):
 	#TODO Dla rektora kwestora ETC ETC
 	wnioski = Wniosek.objects.filter(Q(wnioskodawca_imie_i_nazwisko=current_user.id) | 
 	Q(osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia=current_user.id) | 
-	Q(Osoba_reprezentujaca_komisje_przetargowa=current_user.id) | 
-	Q(Szef_pionu=current_user.id) | 
-	Q(Kierownik_Dzialu_Nauki=current_user.id) | 
-	Q(Kierownik_Biura_Wspolpracy_Miedzynarodowej=current_user.id)
+	Q(Kierownik_Dzialu_Nauki=current_user.id) |
+	Q(Kwestor=current_user.id) |
+	Q(Rektor=current_user.id) |
+	Q(Kierownik_Dzialu_Zamowien_Publicznych=current_user.id)
 	)
 	#Q(Szef_pionu=current_user.id) | 
 	#Q(Szef_pionu=current_user.id) | 
@@ -83,15 +83,15 @@ def wniosek_moje(request):
 	
 def wniosek_new(request):
 	if request.method == 'POST':
-		form=WniosekForm_Wnioskodawca(request.POST)
+		form=WniosekForm_New(request.POST)
 		if form.is_valid():
 			form.save()
 			#return HttpResponseRedirect(reverse('pp:'))
 		return  render(request, 'home.html', {
-		'form': WniosekForm_Szacujacy(),
+		'form': WniosekForm_New(),
 	})
 
-	form = WniosekForm_Wnioskodawca()
+	form = WniosekForm_New()
 	context = {"form": form}
 	template = "wniosek_new.html"
 	return render(request,template,context)
@@ -101,31 +101,7 @@ def wniosek_dzial_nauki(request):
 	context = {"form": form}
 	template = "wniosek_dzial_nauki.html"
 	return render(request,template,context)
-		
-def wniosek_biuro_wspolpracy(request):
-	form = WniosekForm_Biuro_Wspolpracy()
-	context = {"form": form}
-	template = "wniosek_biuro_wspolpracy.html"
-	return render(request,template,context)
-	
-def wniosek_biuro_rozwoju(request):
-	form = WniosekForm_Biuro_Rozwoju()
-	context = {"form": form}
-	template = "wniosek_biuro_rozwoju.html"
-	return render(request,template,context)
-	
-def wniosek_szef_pionu(request):
-	form = WniosekForm_Szef_Pionu()
-	context = {"form": form}
-	template = "wniosek_szef_pionu.html"
-	return render(request,template,context)
-	
-def wniosek_step3(request):
-	form = WniosekForm_Step3()
-	context = {"form": form}
-	template = "wniosek_step3.html"
-	return render(request,template,context)
-	
+				
 def register(request):
     context = RequestContext(request)
     registered = False
@@ -234,18 +210,19 @@ def my_model_view(request, mymodel_id):
 	#(Item.objects.filter(Q(creator=owner) | Q(moderated=False))
 	#form = myModelForm(instance=model)
 	
+	template = "wniosek_generic.html"
+	
 	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
 		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-		template = "wniosek_szacujacy.html"
-	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
-		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-		template = "wniosek_szacujacy.html"
-	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
-		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-		template = "wniosek_szacujacy.html"
-	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
-		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-		template = "wniosek_szacujacy.html"
+		
+	if current_user == getattr(model, 'Kwestor'):
+		form = WniosekForm_Kwestor(request.POST or None, instance=instance)
+		
+	if current_user == getattr(model, 'Rektor'):
+		form = WniosekForm_Rektor(request.POST or None, instance=instance)
+		
+	if current_user == getattr(model, 'Kierownik_Dzialu_Zamowien_Publicznych'):
+		form = WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(request.POST or None, instance=instance)
 	
 	if request.method == 'POST':
 
@@ -262,20 +239,19 @@ def my_model_view(request, mymodel_id):
 			
 	else:	
 		form = MyModelForm(instance=model)
-		template = "wniosek_detail.html"
+		template = "wniosek_generic.html"
 	
 		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
 			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-			template = "wniosek_szacujacy.html"
-		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
-			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-			template = "wniosek_szacujacy.html"
-		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
-			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-			template = "wniosek_szacujacy.html"
-		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
-			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
-			template = "wniosek_szacujacy.html"
+			
+		if current_user == getattr(model, 'Kwestor'):
+			form = WniosekForm_Kwestor(request.POST or None, instance=instance)
+			
+		if current_user == getattr(model, 'Rektor'):
+			form = WniosekForm_Rektor(request.POST or None, instance=instance)
+			
+		if current_user == getattr(model, 'Kierownik_Dzialu_Zamowien_Publicznych'):
+			form = WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(request.POST or None, instance=instance)
 
 		context = {"form": form}
 		return render(request, template, context)

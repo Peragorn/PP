@@ -68,7 +68,7 @@ class Wniosek(models.Model):
 	
 	
 	#6
-	kontrasygnata_finansowa_uwagi = models.CharField(max_length=255, null=True, blank=True)
+
 	#_6_Data = models.DateField()
 	## PODPIS?
 	
@@ -82,26 +82,25 @@ class Wniosek(models.Model):
 	uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku = models.CharField(max_length=255, null=True, blank=True)
 	
 	#9
-	komisja_przetargowa = models.CharField(max_length=255, null=True, blank=True)
-	dzial_aparatury_badawczej_i_dydaktycznej = models.CharField(max_length=255, null=True, blank=True)
-	wnioskodawca_w_uzgodnieniu_z_dzialem_nauki = models.CharField(max_length=255, null=True, blank=True)
-	wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
+	Przedmioty_zamowienia_Komisja_przetargowa = models.CharField(max_length=255, null=True, blank=True)
+	Przedmioty_zamowienia_Dzial_aparatury_badawczej_i_dydaktycznej = models.CharField(max_length=255, null=True, blank=True)
+	Przedmioty_zamowienia_wnioskodawca_w_uzgodnieniu_z_dzialem_nauki = models.CharField(max_length=255, null=True, blank=True)
+	Przedmioty_zamowienia_Wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
 	
-	# Osoby decydujace
-	Szef_pionu = models.ForeignKey(User, related_name = 'wn_us_szef', null=True, blank=True)
-	Decyzja_szefa_pionu = models.BooleanField(default=False, blank=True)
-	
-	Osoba_reprezentujaca_komisje_przetargowa = models.ForeignKey(User, related_name = 'wn_user_komisja_przetargowa' , null=True, blank=True)
-	Decyzja_komisji_przetargowej = models.BooleanField(default=False, blank=True)
-	
-	Kierownik_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.ForeignKey(User, related_name = 'wn_user_biuro_rozwoju' , null=True, blank=True)
-	Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.BooleanField(default=False, blank=True)
-	
+	# Osoby decydujace	
 	Kierownik_Dzialu_Nauki = models.ForeignKey(User, related_name = 'wn_user_dzial_nauki' , null=True, blank=True)
-	Decyzja_kierownika_Dzialu_Nauki = models.BooleanField(default=False, blank=True)
+	potwierdzenie_pokrycia_finansowego_ze_srodkow_na_prace_naukowo_badawcze = models.CharField(max_length=255, null=True, blank=True)
 	
-	Kierownik_Biura_Wspolpracy_Miedzynarodowej = models.ForeignKey(User, related_name = 'wn_user_biuro_wspolpracy' , null=True, blank=True)
-	Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej = models.BooleanField(default=False, blank=True)
+	Kwestor = models.ForeignKey(User, related_name = 'wn_user_kwestor' , null=True, blank=True)
+	kontrasygnata_finansowa_uwagi = models.CharField(max_length=255, null=True, blank=True)
+	
+	Rektor = models.ForeignKey(User, related_name = 'wn_user_rektor' , null=True, blank=True)
+	zatwierdzenie_pod_wzgledem_merytorycznym = models.BooleanField(default=False, blank=True)
+	zatwierdzenie_do_realizacji = models.BooleanField(default=False, blank=True)
+	zatwierdzenie_przedmiotow_zamowienia = models.BooleanField(default=False, blank=True)
+	
+	Kierownik_Dzialu_Zamowien_Publicznych = models.ForeignKey(User, related_name = 'wn_user_dzial_zamowien' , null=True, blank=True)
+	Decyzja_kierownika_Zamowien_Publicznych = models.BooleanField(default=False, blank=True)	
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return "%d - %s" % (self.id, self.wnioskodawca)

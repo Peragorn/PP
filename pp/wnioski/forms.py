@@ -13,7 +13,7 @@ class WniosekForm_All(forms.ModelForm):
 		class Meta:
 			model = Wniosek
 			fields = ['jednostka_organizacyjna_uczelni', #1
-			'wnioskodawca', 
+			'wnioskodawca_imie_i_nazwisko', 
 			'wnioskodawca_tel', 
 			'osoba_dokonujaca_opisu',
 			'przedmiot_zamowienia', #2
@@ -31,51 +31,63 @@ class WniosekForm_All(forms.ModelForm):
 			'uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku', #8
 			]
 			
-
 			
-class WniosekForm_Biuro_Wspolpracy(forms.ModelForm):
+			
+class WniosekForm_Rektor(forms.ModelForm):
 		class Meta:
 			model = Wniosek
-			fields = ['Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej'
-			]
-
-class WniosekForm_Biuro_Rozwoju(forms.ModelForm):
-		class Meta:
-			model = Wniosek
-			fields = ['Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych'
+			fields = ['zatwierdzenie_pod_wzgledem_merytorycznym',
+			'zatwierdzenie_do_realizacji',
+			'zatwierdzenie_przedmiotow_zamowienia'
 			]
 			
-class WniosekForm_Szef_Pionu(forms.ModelForm):
+class WniosekForm_Kwestor(forms.ModelForm):
 		class Meta:
 			model = Wniosek
-			fields = ['Decyzja_szefa_pionu'
+			fields = ['kontrasygnata_finansowa_uwagi'
 			]
 			
 class WniosekForm_Dzial_Nauki(forms.ModelForm):
 		class Meta:
 			model = Wniosek
-			fields = ['Decyzja_kierownika_Dzialu_Nauki'
+			fields = ['potwierdzenie_pokrycia_finansowego_ze_srodkow_na_prace_naukowo_badawcze'
+			]
+			
+class WniosekForm_New(forms.ModelForm): # NEW
+		class Meta:
+			model = Wniosek
+			fields = ['wnioskodawca_imie_i_nazwisko', #
+			'osoba_dokonujaca_opisu', #
+			'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia', #
+			'Kierownik_Dzialu_Nauki', #
+			'Kwestor', #
+			'Rektor', #
+			'Kierownik_Dzialu_Zamowien_Publicznych' #
+			
+			]
+			
+class WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(forms.ModelForm): # NEW
+		class Meta:
+			model = Wniosek
+			fields = ['data_zlozenia_wniosku_w_dziale_zamowien_publicznych', #
+			'uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku', #
+			'Przedmioty_zamowienia_Komisja_przetargowa', #
+			'Przedmioty_zamowienia_Dzial_aparatury_badawczej_i_dydaktycznej', #
+			'Przedmioty_zamowienia_wnioskodawca_w_uzgodnieniu_z_dzialem_nauki', #
+			'Przedmioty_zamowienia_Wnioskodawca' #
+			
 			]
 			
 class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 		class Meta:
 			model = Wniosek
 			fields = ['jednostka_organizacyjna_uczelni',
-			'wnioskodawca_imie_i_nazwisko', 
-			'wnioskodawca_tel',
-			'osoba_dokonujaca_opisu',
 			'przedmiot_zamowienia',
 			'przedmiot_zamowienia_okreslono_na_okres',
 			'merytoryczne_uzasadnienie_celowosci',
 			'termin_realizacji_zamowienia',
 			'kwota_przeznaczona_na_sfinansowanie_zamowienia_brutto',
 			'zrodlo_finansowania_oraz_zgodnosc_z_planem_rzeczowo_finansowym',
-			'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia',
-			'Osoba_reprezentujaca_komisje_przetargowa',
-			'Szef_pionu',
-			'Kierownik_Biura_Rozwoju_i_Programow_Miedzynarodowych',
-			'Kierownik_Dzialu_Nauki',
-			'Kierownik_Biura_Wspolpracy_Miedzynarodowej',
 			]
 			
 class WniosekForm_Szacujacy(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
@@ -83,18 +95,7 @@ class WniosekForm_Szacujacy(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
 			model = Wniosek
 			fields = ['szacunkowa_wartosc_zamowienia_netto'
 			]
-			
-class WniosekForm_Step3(forms.ModelForm): #KIEROWNIK DZIALU NAUKI LUB OSOBA UPOWAZNIONA
-		class Meta:
-			model = Wniosek
-			fields = ['data_zlozenia_wniosku_w_dziale_zamowien_publicznych', #7
-			'uwagi_dzialu_zamowien_publicznych_dotyczace_wniosku', #8
-			'komisja_przetargowa',
-			'dzial_aparatury_badawczej_i_dydaktycznej',
-			'wnioskodawca_w_uzgodnieniu_z_dzialem_nauki',
-			'wnioskodawca'
-			]
-			
+						
 class PrzedmiotZamowieniaForm(forms.ModelForm): # Przedmiot Zamowienia
 		class Meta:
 			model = Przedmiot_Zamowienia
