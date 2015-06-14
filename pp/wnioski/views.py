@@ -5,9 +5,9 @@ from django.contrib.auth import authenticate, login, logout
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 from django.db import models
-
+from django import forms
 from django.shortcuts import render, render_to_response, RequestContext, HttpResponseRedirect, HttpResponse
-
+from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
 from .forms import UserForm
@@ -104,17 +104,7 @@ def przedmiot_zamowienia(request):
 	context = {"form": form}
 	template = "przedmiot_zamowienia.html"
 	return render(request,template,context)
-	
-def search(request):
-
-	#category_list = Movie.objects.order_by('-question')[:5]
-	#context_dict = {'Moviees': category_list}
-	form = UserForm()
-	search_list = Game.objects.order_by('-name')[:5]
-	context = {'search_list': search_list}
-	template = "search.html"
-	return render(request,template,context)
-	
+		
 def user_login(request):
     context = RequestContext(request)
 
@@ -143,7 +133,6 @@ def user_logout(request):
 
     return HttpResponseRedirect('/')
 
-
 	
 # ITEM VIEWS
 
@@ -151,11 +140,20 @@ class WniosekDetailView(DetailView):
 
 	model = Wniosek
 	slug_field = 'id'
-		
+			
 	def get_context_data(self, **kwargs):
 		context = super(WniosekDetailView, self).get_context_data(**kwargs)
 		context['now'] = timezone.now()
 		return context
+	
+def my_model_view(request, mymodel_id):
+	class MyModelForm(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+
+	model = get_object_or_404(Wniosek, pk=mymodel_id)
+	form = MyModelForm(instance=model)
+	return render(request, 'wniosek_detail.html', { 'form': form})
 	
 class Przedmiot_ZamowieniaDetailView(DetailView):
 

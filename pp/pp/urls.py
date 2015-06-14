@@ -11,10 +11,8 @@ urlpatterns = patterns('',
 	url(r'^$', 'wnioski.views.home', name='home'),
 	
 	url(r'^login/$', 'wnioski.views.user_login', name='user_login'),
+	url(r'^logout/$', 'wnioski.views.user_logout', name='user_logout'),
 	url(r'^signup/$', 'wnioski.views.register', name='register'),
-	
-	url(r'^search/$', 'wnioski.views.search', name='search'),
-	url(r'^search/$', 'wnioski.views.search', name='search'),
 	
 	url(r'^about/$', 'wnioski.views.about', name='about'),
 	url(r'^contact/$', 'wnioski.views.contact', name='contact'),
@@ -30,7 +28,7 @@ urlpatterns = patterns('',
 	url(r'^wniosek/biuro_wspolpracy/$', 'wnioski.views.wniosek_biuro_wspolpracy', name='wniosek_biuro_wspolpracy'),
 	url(r'^wniosek/dzial_nauki/$', 'wnioski.views.wniosek_dzial_nauki', name='wniosek_dzial_nauki'),
 
-	url(r'^wniosek/(?P<slug>[-_\w]+)/$', WniosekDetailView.as_view(), name='wniosek_detail'),
+	url(r'^wniosek/(?P<mymodel_id>[-_\w]+)/$', 'wnioski.views.my_model_view', name='wniosek_detail'),
 	
 	url(r'^firma/(?P<slug>[-_\w]+)/$', Przedmiot_ZamowieniaDetailView.as_view(), name='firma_detail'),
 	

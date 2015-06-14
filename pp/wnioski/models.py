@@ -87,16 +87,16 @@ class Wniosek(models.Model):
 	wnioskodawca = models.CharField(max_length=255, null=True, blank=True)
 	
 	# Decyzje
-	Decyzja_szefa_pionu = models.NullBooleanField(default=False, blank=True)
-	Decyzja_komisji_przetargowej = models.NullBooleanField(default=False, blank=True)
-	Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.NullBooleanField(default=False, blank=True)
-	Decyzja_kierownika_Dzialu_Nauki = models.NullBooleanField(default=False, blank=True)
-	Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej = models.NullBooleanField(default=False, blank=True)
-	Decyzja_dzialu_nauki = models.NullBooleanField(default=False, blank=True)
+	Decyzja_szefa_pionu = models.BooleanField(default=False, blank=True)
+	Decyzja_komisji_przetargowej = models.BooleanField(default=False, blank=True)
+	Decyzja_kierownika_Biura_Rozwoju_i_Programow_Miedzynarodowych = models.BooleanField(default=False, blank=True)
+	Decyzja_kierownika_Dzialu_Nauki = models.BooleanField(default=False, blank=True)
+	Decyzja_kierownika_Biura_Wspolpracy_Miedzynarodowej = models.BooleanField(default=False, blank=True)
+	Decyzja_dzialu_nauki = models.BooleanField(default=False, blank=True)
 	
 	# AKTORZY
-	Szacujacy_wartosc = models.ForeignKey(User, related_name = 'wn_us_szacujacy')
-	Szef_pionu = models.ForeignKey(User, related_name = 'wn_us_szef')
+	Szacujacy_wartosc = models.ForeignKey(User, related_name = 'wn_us_szacujacy', null=True)
+	Szef_pionu = models.ForeignKey(User, related_name = 'wn_us_szef', null=True)
 	
 	def __str__(self):              # __unicode__ on Python 2
 		return "%d - %s" % (self.id, self.wnioskodawca)

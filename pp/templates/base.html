@@ -80,11 +80,7 @@ body {
           {% if user.is_authenticated %}
           <li><a  href='{% url "home" %}'>{{ user }}</a></li>
 		  
-		  <li><a  href=''>Wyloguj</a></li> 
-		  
-		  <!--
-		  {% url "user_login" %}
-		  -->
+		  <li><a  href='{% url "user_logout" %}'>Wyloguj</a></li> 
 		  
 
           {% else %}
