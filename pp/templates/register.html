@@ -1,10 +1,37 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
 
-{% block content %}
-<h1>Hello, register</h1>
+    <title>Signin</title>
 
-<form method="POST" action=""> {% csrf_token %}
-{{ form.as_p }}
-<Input type='submit' value='Create Account' class='btn'>
-</form>
-{% endblock %}
+    <!-- Bootstrap core CSS -->
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="http://getbootstrap.com/dist/css/signin.css" rel="stylesheet">
+
+  </head>
+
+    <body>
+        <form class="form-signin" role="form" id="user_form" method="post" action="/register/" enctype="multipart/form-data"> {% csrf_token %}
+            {% if registered %}
+                <p>Dziękujemy za rejesrację.</p>
+                <p>Możesz się teraz <a href="/login/">Zalogować</a></p>
+            {% else %}
+                <h2 class="form-signin-heading">Zarejestruj się</h2>
+
+                {{ user_form.as_p }}
+                {{ profile_form.as_p }}
+
+            <button class="btn btn-lg btn-primary btn-block" type="submit">Zarejestruj</button>
+            {% endif %}
+        </form>
+
+    </body>
+</html>

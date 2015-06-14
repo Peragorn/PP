@@ -10,9 +10,11 @@ from django.shortcuts import render, render_to_response, RequestContext, HttpRes
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 
+from django.db.models import Q
+
 from .forms import UserForm
 from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_Biuro_Wspolpracy, WniosekForm_Szef_Pionu, WniosekForm_Dzial_Nauki, PrzedmiotZamowieniaForm
-from .models import Wniosek, Przedmiot_Zamowienia
+from .models import Wniosek, Przedmiot_Zamowienia, User, Ranga
 from django.utils import timezone
 
 def home(request):
@@ -37,6 +39,35 @@ def wniosek_submit(request):
 	return  render(request, 'wniosek_submit.html', {
 		'form': WniosekForm_Wnioskodawca(),
 	})
+	
+def wniosek_moje(request):
+	current_user = request.user
+	#category_list = Movie.objects.order_by('-question')[:5]
+	#context_dict = {'Moviees': category_list}
+	#(Item.objects.filter(Q(creator=owner) | Q(moderated=False))
+	#wnioski = Wniosek.objects.filter('-id')[:3]
+	
+	#TODO Dla rektora kwestora ETC ETC
+	wnioski = Wniosek.objects.filter(Q(wnioskodawca_imie_i_nazwisko=current_user.id) | 
+	Q(osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia=current_user.id) | 
+	Q(Osoba_reprezentujaca_komisje_przetargowa=current_user.id) | 
+	Q(Szef_pionu=current_user.id) | 
+	Q(Kierownik_Dzialu_Nauki=current_user.id) | 
+	Q(Kierownik_Biura_Wspolpracy_Miedzynarodowej=current_user.id)
+	)
+	#Q(Szef_pionu=current_user.id) | 
+	#Q(Szef_pionu=current_user.id) | 
+	#Q(Szef_pionu=current_user.id) | 
+	#Q(Szef_pionu=current_user.id) | 
+	#Q(Szef_pionu=current_user.id) | ) 
+	
+
+	
+	context_dict = {'wnioski': wnioski}
+	
+	form = UserForm()
+	template = "wniosek_moje.html"
+	return render(request,template,context_dict)
 	
 def wniosek_new(request):
 
@@ -76,10 +107,33 @@ def wniosek_step3(request):
 	return render(request,template,context)
 	
 def register(request):
-	form = UserForm()
-	context = {"form": form}
-	template = "register.html"
-	return render(request,template,context)
+    context = RequestContext(request)
+    registered = False
+
+    if request.method == 'POST':
+        user_form = UserForm(data=request.POST)
+
+        if user_form.is_valid():
+            user = user_form.save()
+
+            user.set_password(user.password)
+            user.save()
+
+            ut = Ranga(user=user, type=0)
+            ut.save()
+
+            registered = True
+
+        else:
+            print(user_form.errors)
+
+    else:
+        user_form = UserForm()
+
+
+    return render_to_response(
+            'register.html',
+            {'user_form': user_form, 'registered': registered}, context)
 
 def about(request):
 	form = UserForm()
