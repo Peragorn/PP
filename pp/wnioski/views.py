@@ -17,6 +17,8 @@ from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_New, W
 from .models import Wniosek, Przedmiot_Zamowienia, User, Ranga
 from django.utils import timezone
 
+from django.core.mail import send_mail
+
 def home(request):
 
 	#category_list = Movie.objects.order_by('-question')[:5]
@@ -86,6 +88,23 @@ def wniosek_new(request):
 		form=WniosekForm_New(request.POST)
 		if form.is_valid():
 			form.save()
+			
+			msg_title = 'WniosekHelper: Powiadomienie o nowym wniosku'
+			msg_body = 'WniosekHelper: Zostales dodany jako osoba upowazniona do wniosku. Odwiedz nas na www.wniosekhelper.ru.au.us'
+			msg_from = 'lgodlewski8@gmail.com'
+			
+			msg_1 = form.cleaned_data['wnioskodawca_imie_i_nazwisko'].email
+			msg_2 = form.cleaned_data['osoba_dokonujaca_opisu'].email
+			msg_3 = form.cleaned_data['osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'].email
+			msg_4 = form.cleaned_data['Kierownik_Dzialu_Nauki'].email
+			msg_5 = form.cleaned_data['Kwestor'].email
+			msg_6 = form.cleaned_data['Rektor'].email
+			msg_7 = form.cleaned_data['Kierownik_Dzialu_Zamowien_Publicznych'].email
+
+			
+			send_mail(msg_title, msg_body, msg_from, [msg_1, msg_2, msg_3, msg_4, msg_5, msg_6, msg_7], fail_silently=False)
+
+			
 			#return HttpResponseRedirect(reverse('pp:'))
 		return  render(request, 'home.html', {
 		'form': WniosekForm_New(),
