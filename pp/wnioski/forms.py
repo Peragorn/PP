@@ -35,6 +35,12 @@ class WniosekForm_Kierownik_Dzialu_Nauki(forms.ModelForm):
 			fields = ['potwierdzenie_pokrycia_finansowego_ze_srodkow_na_prace_naukowo_badawcze'
 			]
 			
+class WniosekForm_osoba_dokonujaca_opisu(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+			fields = ['zatwierdzenie_przedmiotow_zamowienia_przez_osobe_dokonujaca_opisu'
+			]
+			
 class WniosekForm_New(forms.ModelForm): # NEW
 		class Meta:
 			model = Wniosek
@@ -56,7 +62,8 @@ class WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(forms.ModelForm): # NEW
 			'Przedmioty_zamowienia_Komisja_przetargowa', #
 			'Przedmioty_zamowienia_Dzial_aparatury_badawczej_i_dydaktycznej', #
 			'Przedmioty_zamowienia_wnioskodawca_w_uzgodnieniu_z_dzialem_nauki', #
-			'Przedmioty_zamowienia_Wnioskodawca' #
+			'Przedmioty_zamowienia_Wnioskodawca',
+			'Decyzja_kierownika_Zamowien_Publicznych'
 			
 			]
 			
@@ -75,7 +82,8 @@ class WniosekForm_Wnioskodawca(forms.ModelForm): # WNIOSKODAWCA
 class WniosekForm_Szacujacy(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
 		class Meta:
 			model = Wniosek
-			fields = ['szacunkowa_wartosc_zamowienia_netto'
+			fields = ['szacunkowa_wartosc_zamowienia_netto',
+			'ustalenia_szacunkowej_wartosci_zamowienia_dokonano_na_podstawie'
 			]
 						
 class PrzedmiotZamowieniaForm(forms.ModelForm): # Przedmiot Zamowienia

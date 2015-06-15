@@ -32,6 +32,7 @@ class Wniosek(models.Model):
 
 	#1.2
 	osoba_dokonujaca_opisu = models.ForeignKey(User, related_name = 'wn_user_osoba_dokonujaca_opisu', null=True, blank=True)
+	zatwierdzenie_przedmiotow_zamowienia_przez_osobe_dokonujaca_opisu = zatwierdzenie_pod_wzgledem_merytorycznym = models.BooleanField(default=False, blank=True)
 	#osoba_dokonujaca_opisu_tel = models.CharField(max_length=255, null=True, blank=True)
 	#osoba_dokonujaca_opisu_email = models.CharField(max_length=255, null=True, blank=True)
 	

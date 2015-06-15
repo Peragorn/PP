@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from .forms import UserForm
-from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_New, WniosekForm_Szacujacy, WniosekForm_Kierownik_Dzialu_Nauki, WniosekForm_Kwestor, WniosekForm_Rektor, WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych, PrzedmiotZamowieniaForm
+from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_New, WniosekForm_Szacujacy, WniosekForm_Kierownik_Dzialu_Nauki, WniosekForm_osoba_dokonujaca_opisu, WniosekForm_Kwestor, WniosekForm_Rektor, WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych, PrzedmiotZamowieniaForm
 from .models import Wniosek, Przedmiot_Zamowienia, User, Ranga
 from django.utils import timezone
 
@@ -45,7 +45,8 @@ def wniosek_moje(request):
 	Q(Kierownik_Dzialu_Nauki=current_user.id) |
 	Q(Kwestor=current_user.id) |
 	Q(Rektor=current_user.id) |
-	Q(Kierownik_Dzialu_Zamowien_Publicznych=current_user.id)
+	Q(Kierownik_Dzialu_Zamowien_Publicznych=current_user.id) |
+	Q(osoba_dokonujaca_opisu=current_user.id)
 	).order_by('id')
 	
 	
@@ -327,6 +328,8 @@ def my_model_view(request, mymodel_id):
 		
 	if current_user == getattr(model, 'Kierownik_Dzialu_Zamowien_Publicznych'):
 		form = WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(request.POST or None, instance=instance)
+	
+	context = {"form": form}
 	
 	if request.method == 'POST':
 
