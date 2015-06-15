@@ -1,24 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="shortcut icon" href="../../assets/ico/favicon.ico">
+{% extends "base.html" %}
+{% load widget_tweaks %}
 
-    <title>Signin</title>
+{% block content %}
 
-    <!-- Bootstrap core CSS -->
-    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="http://getbootstrap.com/dist/css/signin.css" rel="stylesheet">
-
-  </head>
-
-    <body>
         <form class="form-signin" role="form" id="user_form" method="post" action="/register/" enctype="multipart/form-data"> {% csrf_token %}
             {% if registered %}
                 <p>Dziękujemy za rejesrację.</p>
@@ -33,5 +17,4 @@
             {% endif %}
         </form>
 
-    </body>
-</html>
+{% endblock %}		
