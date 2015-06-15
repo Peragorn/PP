@@ -5,7 +5,7 @@
 
         <form class="form-signin" role="form" id="user_form" method="post" action="/register/" enctype="multipart/form-data"> {% csrf_token %}
             {% if registered %}
-                <p>Dziękujemy za rejesrację.</p>
+                <p>Dziękujemy za rejestrację.</p>
                 <p>Możesz się teraz <a href="/login/">Zalogować</a></p>
             {% else %}
                 <h2 class="form-signin-heading">Zarejestruj się</h2>
