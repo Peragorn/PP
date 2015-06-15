@@ -29,7 +29,6 @@ class Wniosek(models.Model):
 	#1.1
 	#wnioskodawca_imie_i_nazwisko = models.CharField(max_length=255, null=True, blank=True)
 	wnioskodawca_imie_i_nazwisko = models.ForeignKey(User, related_name = 'wn_user_imie', null=True, blank=True)
-	wnioskodawca_tel = models.CharField(max_length=255, null=True, blank=True)
 
 	#1.2
 	osoba_dokonujaca_opisu = models.ForeignKey(User, related_name = 'wn_user_osoba_dokonujaca_opisu', null=True, blank=True)

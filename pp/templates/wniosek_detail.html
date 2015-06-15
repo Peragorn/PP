@@ -4,20 +4,71 @@
 
 <table>
     {% for field in form %}
-        <tr>
-            <td>{{ field.label }}</td>
+	<tr>
+	
+	<td>{{ field.label }}</td>
+
+	{% if field.name == "wnioskodawca_imie_i_nazwisko" %}
+	<td>
+	<strong>
+	{{ imie_wnioskodawca_imie_i_nazwisko  }}
+	</strong>
+	</td>	
+
+	{% elif field.name == "osoba_dokonujaca_opisu" %}
+	<td>
+	<strong>
+	{{ imie_osoba_dokonujaca_opisu  }}
+	</strong>
+	</td>	
+	
+	{% elif field.name == "osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia" %}
+	<td>
+	<strong>
+	{{ imie_osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia  }}
+	</strong>
+	</td>	
+	
+	{% elif field.name == "Kwestor" %}
+	<td>
+	<strong>
+	{{ imie_Kwestor }}
+	</strong>
+	</td>
+
+	{% elif field.name == "Rektor" %}
+	<td>
+	<strong>
+	{{ imie_Rektor }}
+	</strong>
+	</td>
+	
+
+	
+	{% elif field.name == "Kierownik_Dzialu_Zamowien_Publicznych" %}
+	<td>
+	<strong>
+	{{ imie_Kierownik_Dzialu_Zamowien_Publicznych }}
+	</strong>
+	</td>
+	
+	{% elif field.name == "Kierownik_Dzialu_Nauki" %}
+	<td>
+	<strong>
+	{{ imie_Kierownik_Dzialu_Nauki }}
+	</strong>
+	</td>
+	
+	{% else %}
+		
+
+
             <td>{{ field.value }}</td>
         </tr>
+		
+	{% endif %}
     {% endfor %}
 </table>
 
-
-<!-- TODO 
-
-Dodac rozne formularze w zaleznosci od tego ktora z upowaznionych osob przeglada wniosek.
-
-Np. Rektor ma formularz do potwierdzenia i podpisania etc, wnioskodawca widzi tylko aktualny stan wniosku etc.
-
--->
 
 {% endblock %}

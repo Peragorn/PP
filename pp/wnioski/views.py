@@ -13,7 +13,7 @@ from django.core.urlresolvers import reverse
 from django.db.models import Q
 
 from .forms import UserForm
-from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_New, WniosekForm_Szacujacy, WniosekForm_Dzial_Nauki, WniosekForm_Kwestor, WniosekForm_Rektor, WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych,PrzedmiotZamowieniaForm
+from .forms import WniosekForm_All, WniosekForm_Wnioskodawca, WniosekForm_New, WniosekForm_Szacujacy, WniosekForm_Kierownik_Dzialu_Nauki, WniosekForm_Kwestor, WniosekForm_Rektor, WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych, PrzedmiotZamowieniaForm
 from .models import Wniosek, Przedmiot_Zamowienia, User, Ranga
 from django.utils import timezone
 
@@ -46,7 +46,9 @@ def wniosek_moje(request):
 	Q(Kwestor=current_user.id) |
 	Q(Rektor=current_user.id) |
 	Q(Kierownik_Dzialu_Zamowien_Publicznych=current_user.id)
-	)
+	).order_by('id')
+	
+	
 	#Q(Szef_pionu=current_user.id) | 
 	#Q(Szef_pionu=current_user.id) | 
 	#Q(Szef_pionu=current_user.id) | 
@@ -190,11 +192,32 @@ def wniosek_podglad(request, mymodel_id):
 	
 	current_user = request.user
 	instance = get_object_or_404(Wniosek, pk=mymodel_id)
+	
+	
+	
+	imie_wnioskodawca_imie_i_nazwisko = User.objects.get(id=(model.wnioskodawca_imie_i_nazwisko).id).username
+	imie_osoba_dokonujaca_opisu = User.objects.get(id=(model.osoba_dokonujaca_opisu).id).username
+	imie_osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia = User.objects.get(id=(model.osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia).id).username
+	imie_Kierownik_Dzialu_Nauki = User.objects.get(id=(model.Kierownik_Dzialu_Nauki).id).username
+	imie_Kwestor = User.objects.get(id=(model.Kwestor).id).username
+	imie_Rektor = User.objects.get(id=(model.Rektor).id).username
+	imie_Kierownik_Dzialu_Zamowien_Publicznych = User.objects.get(id=(model.Kierownik_Dzialu_Zamowien_Publicznych).id).username
+	
+	
+	
 			
 	form = MyModelForm(instance=model)
 	template = "wniosek_detail.html"
 	
-	context = {"form": form}
+	context = {"form": form, 
+	"imie_wnioskodawca_imie_i_nazwisko": imie_wnioskodawca_imie_i_nazwisko, 
+	"imie_osoba_dokonujaca_opisu": imie_osoba_dokonujaca_opisu, 
+	"imie_osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia": imie_osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia, 
+	"imie_Kierownik_Dzialu_Nauki": imie_Kierownik_Dzialu_Nauki,
+	"imie_Kwestor": imie_Kwestor, 
+	"imie_Rektor": imie_Rektor, 
+	"imie_Kierownik_Dzialu_Zamowien_Publicznych": imie_Kierownik_Dzialu_Zamowien_Publicznych
+	}
 	return render(request, template, context)
 	
 	
@@ -284,6 +307,15 @@ def my_model_view(request, mymodel_id):
 	
 	template = "wniosek_generic.html"
 	
+	if current_user == getattr(model, 'wnioskodawca_imie_i_nazwisko'):
+		form = WniosekForm_Wnioskodawca(request.POST or None, instance=instance)
+		
+	if current_user == getattr(model, 'Kierownik_Dzialu_Nauki'):
+		form = WniosekForm_Kierownik_Dzialu_Nauki(request.POST or None, instance=instance)
+
+	if current_user == getattr(model, 'osoba_dokonujaca_opisu'):
+		form = WniosekForm_osoba_dokonujaca_opisu(request.POST or None, instance=instance)
+		
 	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
 		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
 		
@@ -325,7 +357,16 @@ def my_model_view(request, mymodel_id):
 	else:	
 		form = MyModelForm(instance=model)
 		template = "wniosek_generic.html"
-	
+
+		if current_user == getattr(model, 'wnioskodawca_imie_i_nazwisko'):
+			form = WniosekForm_Wnioskodawca(request.POST or None, instance=instance)
+			
+		if current_user == getattr(model, 'Kierownik_Dzialu_Nauki'):
+			form = WniosekForm_Kierownik_Dzialu_Nauki(request.POST or None, instance=instance)
+
+		if current_user == getattr(model, 'osoba_dokonujaca_opisu'):
+			form = WniosekForm_osoba_dokonujaca_opisu(request.POST or None, instance=instance)
+			
 		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
 			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
 			
