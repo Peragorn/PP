@@ -32,28 +32,6 @@ def home(request):
 	
 ### WNIOSEK
 	
-def wniosek_submit_wnioskodawca(request, id):
-	if request.method == 'POST':
-		instance = get_object_or_404(Wniosek, id=id)
-		form=WniosekForm_All(request.POST or None, instance=instance)
-		if form.is_valid():
-			form.save()
-			#return HttpResponseRedirect(reverse('pp:'))
-	return  render(request, 'wniosek_submit_wnioskodawca.html', {
-		'form': WniosekForm_Wnioskodawca(),
-	})
-	
-def wniosek_submit_szacujacy(request):
-	if request.method == 'POST':
-		instance = get_object_or_404(MyModel, id=id)
-		form=WniosekForm_Szacujacy(request.POST or None, instance=instance)
-		if form.is_valid():
-			form.save()
-			#return HttpResponseRedirect(reverse('pp:'))
-	return  render(request, 'wniosek_submit_szacujacy.html', {
-		'form': WniosekForm_Szacujacy(),
-	})
-	
 def wniosek_moje(request):
 	current_user = request.user
 	#category_list = Movie.objects.order_by('-question')[:5]
@@ -106,7 +84,7 @@ def wniosek_new(request):
 
 			
 			#return HttpResponseRedirect(reverse('pp:'))
-		return  render(request, 'home.html', {
+		return  render(request, 'wniosek_moje.html', {
 		'form': WniosekForm_New(),
 	})
 
@@ -202,20 +180,95 @@ def user_logout(request):
 
     return HttpResponseRedirect('/')
 
+		
+def wniosek_podglad(request, mymodel_id):
+	class MyModelForm(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+
+	model = get_object_or_404(Wniosek, pk=mymodel_id)
 	
-# ITEM VIEWS
-
-
-
-class WniosekDetailView(DetailView):
-
-	model = Wniosek
-	slug_field = 'id'
+	current_user = request.user
+	instance = get_object_or_404(Wniosek, pk=mymodel_id)
 			
-	def get_context_data(self, **kwargs):
-		context = super(WniosekDetailView, self).get_context_data(**kwargs)
-		context['now'] = timezone.now()
-		return context
+	form = MyModelForm(instance=model)
+	template = "wniosek_detail.html"
+	
+	context = {"form": form}
+	return render(request, template, context)
+	
+	
+def my_model_view(request, mymodel_id):
+	class MyModelForm(forms.ModelForm):
+		class Meta:
+			model = Wniosek
+
+	model = get_object_or_404(Wniosek, pk=mymodel_id)
+	
+	current_user = request.user
+	instance = get_object_or_404(Wniosek, pk=mymodel_id)
+	#(Item.objects.filter(Q(creator=owner) | Q(moderated=False))
+	#form = myModelForm(instance=model)
+	
+	template = "wniosek_generic.html"
+	
+	if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+		form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+		
+	if current_user == getattr(model, 'Kwestor'):
+		form = WniosekForm_Kwestor(request.POST or None, instance=instance)
+		
+	if current_user == getattr(model, 'Rektor'):
+		form = WniosekForm_Rektor(request.POST or None, instance=instance)
+		
+	if current_user == getattr(model, 'Kierownik_Dzialu_Zamowien_Publicznych'):
+		form = WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(request.POST or None, instance=instance)
+	
+	if request.method == 'POST':
+
+		if form.is_valid():
+			m = form.save()
+			#return HttpResponseRedirect(reverse('pp:'))
+			
+			template = "wniosek_detail.html"
+			
+			msg_title = 'WniosekHelper: Nowe zmiany w Twoim wniosku! '
+			msg_body = 'Sprawdz stan wniosku na na www.wniosekhelper.ru.au.us'
+			msg_from = 'lgodlewski8@gmail.com'
+			
+			
+			obj = User.objects.get(pk=m.wnioskodawca_imie_i_nazwisko.id)
+			
+			msg_1 = obj.email
+			
+			send_mail(msg_title, msg_body, msg_from, [msg_1], fail_silently=False)
+			form = MyModelForm(instance=model)
+			
+			return  render(request, 'home.html', {
+				'form': WniosekForm_Wnioskodawca(),
+		})
+		else:		
+			return render(request, 'about.html', context)
+			
+	else:	
+		form = MyModelForm(instance=model)
+		template = "wniosek_generic.html"
+	
+		if current_user == getattr(model, 'osoba_dokonujaca_ustalenia_wartosci_szacunkowej_zamowienia'):
+			form = WniosekForm_Szacujacy(request.POST or None, instance=instance)
+			
+		if current_user == getattr(model, 'Kwestor'):
+			form = WniosekForm_Kwestor(request.POST or None, instance=instance)
+			
+		if current_user == getattr(model, 'Rektor'):
+			form = WniosekForm_Rektor(request.POST or None, instance=instance)
+			
+		if current_user == getattr(model, 'Kierownik_Dzialu_Zamowien_Publicznych'):
+			form = WniosekForm_Kierownik_Dzialu_Zamowien_Publicznych(request.POST or None, instance=instance)
+
+		context = {"form": form}
+		return render(request, template, context)
+	
 		
 def my_model_view(request, mymodel_id):
 	class MyModelForm(forms.ModelForm):
