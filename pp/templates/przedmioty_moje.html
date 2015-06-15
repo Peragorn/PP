@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load widget_tweaks %}
+
+{% block content %}
+
+<p>Wnioski w których bierzesz udział:</p>
+	  
+{% for Wniosek in wnioski %}
+
+
+
+
+						<a href="/wniosek/view/{{ Wniosek.id }} " style="text-decoration: none"> 
+			<button class="btn btn-default btn-sm btn-primary" type="button"> 
+
+			Stan wniosku </button>
+			</a>
+			
+
+			
+			
+			<a href="/wniosek/{{ Wniosek.id }}" style="text-decoration: none"> 
+			<button class="btn btn-default btn-sm btn-success" type="button"> Otworz wniosek </button> 
+			</a>
+			
+			<button class="btn btn-default btn-sm" type="button">
+			{{Wniosek.id}} - {{ Wniosek.wnioskodawca_imie_i_nazwisko }}
+			</button>
+			
+
+<br /> <br />
+
+			
+
+			
+{% endfor %}
+	  
+{% endblock %}

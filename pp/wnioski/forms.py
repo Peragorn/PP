@@ -89,3 +89,29 @@ class WniosekForm_Szacujacy(forms.ModelForm): # KOLES OD SZACOWANIA WARTOSCI
 class PrzedmiotZamowieniaForm(forms.ModelForm): # Przedmiot Zamowienia
 		class Meta:
 			model = Przedmiot_Zamowienia
+			
+			
+class WniosekForm_Przedmiot_New(forms.ModelForm): # NEW
+		class Meta:
+			model = Przedmiot_Zamowienia
+			fields = ['nazwa', #
+			'jednostka_miary', #
+			'wniosek', #
+			'ilosc', #
+			'Kwota_na_realizacje_brutto', #
+			'Pozycja_w_planie_zamowien', #
+			'Opinia_trybu_zamowienia' #
+			]	
+
+class WniosekForm_Przedmiot_Podglad(forms.ModelForm): # NEW
+		class Meta:
+			model = Przedmiot_Zamowienia
+			fields = ['nazwa', #
+			'jednostka_miary', #
+			'wniosek', #
+			'ilosc', #
+			'Kwota_na_realizacje_brutto', #
+			'Pozycja_w_planie_zamowien', #
+			'Opinia_trybu_zamowienia' #
+			]					
+			

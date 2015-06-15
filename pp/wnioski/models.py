@@ -107,13 +107,13 @@ class Wniosek(models.Model):
 	
 	
 class Przedmiot_Zamowienia(models.Model):
-	nazwa = models.CharField(max_length=50)
-	jednostka_miary = models.CharField(max_length=255)
-	wniosek = models.ForeignKey(Wniosek, related_name = 'pz_wn')
-	ilosc = models.IntegerField()
-	Kwota_na_realizacje_brutto = models.DecimalField(max_digits=6, decimal_places=2)
-	Pozycja_w_planie_zamowien = models.IntegerField()
-	Opinia_trybu_zamowienia = models.CharField(max_length=255)
+	nazwa = models.CharField(max_length=50, null=True, blank=True)
+	jednostka_miary = models.CharField(max_length=255, null=True, blank=True)
+	wniosek = models.ForeignKey(Wniosek, related_name = 'pz_wn', null=True, blank=True)
+	ilosc = models.IntegerField(null=True, blank=True)
+	Kwota_na_realizacje_brutto = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+	Pozycja_w_planie_zamowien = models.IntegerField(null=True, blank=True)
+	Opinia_trybu_zamowienia = models.CharField(max_length=25, null=True, blank=True)
 		
 	# Nazwa wiersza w tabeli numeru 9
 	postepujacy = models.CharField(max_length=255)

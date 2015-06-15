@@ -8,19 +8,15 @@
 {% for Wniosek in wnioski %}
 
 
-
-
-						<a href="/wniosek/view/{{ Wniosek.id }} " style="text-decoration: none"> 
-			<button class="btn btn-default btn-sm btn-primary" type="button"> 
-
-			Stan wniosku </button>
-			</a>
-			
-
-			
 			
 			<a href="/wniosek/{{ Wniosek.id }}" style="text-decoration: none"> 
 			<button class="btn btn-default btn-sm btn-success" type="button"> Otworz wniosek </button> 
+			</a>
+			
+			<a href="/wniosek/view/{{ Wniosek.id }} " style="text-decoration: none"> 
+			<button class="btn btn-default btn-sm btn-primary" type="button"> 
+
+			Stan wniosku </button>
 			</a>
 			
 			<button class="btn btn-default btn-sm" type="button">
@@ -28,11 +24,26 @@
 			</button>
 			
 
+
+
+			
+
+			
+{% endfor %}
+
 <br /> <br />
 
-			
+<p>Przedmioty zamowienia</p>
 
+{% for Przedmiot in przedmioty %}
 			
+			<a href="/wniosek/view/{{ Wniosek.id }} " style="text-decoration: none"> 
+		
+			
+			<button class="btn btn-default btn-sm" type="button">
+			{{Przedmiot.id}} - {{ Przedmiot.nazwa }}
+			</button>
+</a>
 {% endfor %}
 	  
 {% endblock %}
